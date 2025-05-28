@@ -5,23 +5,30 @@ import List from "./pages/List";
 import Contact from "./pages/Contact";
 import Detail from "./pages/Detail";
 import Notfound from "./pages/Notfound";
+import { getUser, getUsers } from "./utilities/typicode";
+import Loading from "./components/Loading";
+import { ErrorBoundary } from "./components/Error";
 
 const router = createBrowserRouter([
     {
         path: "/",
         element: <Layout/>,
+        hydrateFallbackElement: <Loading/>,
+        errorElement: <ErrorBoundary/>,
         children: [
             {
                 index: true,
-                element: <Home/>
+                element: <Home/>,
             },
             {
                 path: "list",
-                element: <List/>
+                element: <List/>,
+                loader: getUsers,
             },
             {
                 path: "list/:id",
-                element: <Detail/>
+                element: <Detail/>,
+                loader: getUser,
             },
             {
                 path: "contact",
